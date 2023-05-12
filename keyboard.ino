@@ -1,13 +1,14 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
+#include <LittleFS.h>
 
 const char* ssid = "keyboard";
 const char* password = "password";
 
 ESP8266WebServer server(80);
 
+const int LED_PIN = 2;
 void flashLED(int times) {
-  const int LED_PIN = 2;
   for (int i = 0; i < times; i++) {
     digitalWrite(LED_PIN, HIGH);
     delay(100);
@@ -22,17 +23,16 @@ void handleRoot() {
   Serial.print("Client connected from: ");
   Serial.println(clientIP);
   flashLED(3);
-  File file = SPIFFS.open("/index.html", "r");
+  File file = LittleFS.open("/index.html", "r");
   String html = file.readString();
   file.close();
-  server.send(200, "text/html", "test?");
-  //server.send(200, "text/html", html);
+  server.send(200, "text/html", html);
 }
 
 void setup() {
   Serial.begin(9600);
   pinMode(2, OUTPUT);
-  SPIFFS.begin();
+  
 
 
   WiFi.softAP(ssid, password);
@@ -44,7 +44,10 @@ void setup() {
   Serial.println(WiFi.softAPIP());
 
   server.on("/", handleRoot);
+
+  LittleFS.begin();
   server.begin();
+ 
   Serial.println("INIT DONE");
 }
 

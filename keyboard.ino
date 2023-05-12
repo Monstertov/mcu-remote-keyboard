@@ -6,11 +6,22 @@ const char* password = "password";
 
 ESP8266WebServer server(80);
 
+void flashLED(int times) {
+  const int LED_PIN = 2;
+  for (int i = 0; i < times; i++) {
+    digitalWrite(LED_PIN, HIGH);
+    delay(100);
+    digitalWrite(LED_PIN, LOW);
+    delay(100);
+  }
+}
+
+
 void handleRoot() {
   String clientIP = server.client().remoteIP().toString();
   Serial.print("Client connected from: ");
   Serial.println(clientIP);
-
+  flashLED(3);
   File file = SPIFFS.open("/index.html", "r");
   String html = file.readString();
   file.close();
@@ -38,6 +49,5 @@ void setup() {
 }
 
 void loop() {
-  digitalWrite(2, HIGH);
   server.handleClient();
 }

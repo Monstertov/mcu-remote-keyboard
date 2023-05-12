@@ -24,6 +24,10 @@ void handleRoot() {
   Serial.println(clientIP);
   flashLED(3);
   File file = LittleFS.open("/index.html", "r");
+  if(!file){
+    Serial.println("ERROR LITTLEFS FILE");
+    return;
+  }
   String html = file.readString();
   file.close();
   server.send(200, "text/html", html);
@@ -45,7 +49,10 @@ void setup() {
 
   server.on("/", handleRoot);
 
-  LittleFS.begin();
+  if(!LittleFS.begin()){
+    Serial.println("LITTLEFS ERROR");
+    return;
+  }
   server.begin();
  
   Serial.println("INIT DONE");

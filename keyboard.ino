@@ -2,7 +2,7 @@
 #include <ESP8266WebServer.h>
 #include <LittleFS.h>
 
-
+// upload datafolder to ESP with the plugin https://github.com/earlephilhower/arduino-esp8266littlefs-plugin in IDE version 1
 
 // wifi AP mode
 const char* ssid = "keyboard";

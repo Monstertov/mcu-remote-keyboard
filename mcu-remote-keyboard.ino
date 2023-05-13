@@ -79,6 +79,6 @@ void setup() {
 }
 
 void loop() {
-  server.handleClient();
   digitalWrite(LED_PIN, LOW);
+  server.handleClient();
 }

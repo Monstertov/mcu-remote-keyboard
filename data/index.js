@@ -1,6 +1,15 @@
 // Keyboard capture script
 let keystrokes = {};
 
+
+
+
+function flashLED(times) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/flash-led?times=" + times, true);
+    xhr.send();
+  }
+
 document.addEventListener('keydown', event => {
     if (event.key === '^') {
         console.log('^');

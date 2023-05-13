@@ -39,3 +39,10 @@ document.addEventListener('keyup', event => {
 
     //console.log(`UP: ${event.key}`);
 });
+
+
+// force keyboard mobile
+document.addEventListener('DOMContentLoaded', function() {
+    var myInput = document.getElementById('myInput');
+    myInput.focus();
+  });

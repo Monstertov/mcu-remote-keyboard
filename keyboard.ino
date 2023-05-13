@@ -1,6 +1,7 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
 #include <LittleFS.h>
+#include <ESP8266mDNS.h>
 
 // upload datafolder to ESP with the plugin https://github.com/earlephilhower/arduino-esp8266littlefs-plugin in IDE version 1
 
@@ -60,6 +61,7 @@ void setup() {
   if (!MDNS.begin("keyboard")) {
     Serial.println("MDNS ERROR");
   }
+  Serial.print("SERVER DNS: keyboard.local");
 
   // webserver
   server.on("/", handleRoot);

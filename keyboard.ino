@@ -17,12 +17,10 @@ void flashLED(int times) {
   }
 }
 
-
 void handleRoot() {
   String clientIP = server.client().remoteIP().toString();
   Serial.print("Client connected from: ");
   Serial.println(clientIP);
-  flashLED(3);
   File file = LittleFS.open("/index.html", "r");
   if(!file){
     Serial.println("ERROR LITTLEFS FILE");
@@ -53,6 +51,15 @@ void setup() {
     Serial.println("LITTLEFS ERROR");
     return;
   }
+
+  // test c++ from javascript
+  server.on("/flash-led", HTTP_GET, [](){
+    String timesStr = server.arg("times");
+    int times = timesStr.toInt();
+    flashLED(times);
+  });
+
+
   server.begin();
  
   Serial.println("INIT DONE");

@@ -56,6 +56,11 @@ void setup() {
     return;
   }
 
+  // dns
+  if (!MDNS.begin("keyboard")) {
+    Serial.println("MDNS ERROR");
+  }
+
   // webserver
   server.on("/", handleRoot);
 

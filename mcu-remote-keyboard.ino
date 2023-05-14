@@ -6,7 +6,7 @@
 // upload datafolder to ESP with the plugin https://github.com/earlephilhower/arduino-esp8266littlefs-plugin in IDE version 1
 
 // wifi AP mode
-const char* ssid = "keyboard";
+const char* ssid = "Remote Keyboard";
 const char* password = "password";
 
 ESP8266WebServer server(80);

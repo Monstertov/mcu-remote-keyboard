@@ -9,6 +9,10 @@
 <body>
 	<h1>Console</h1>
 	<input type="text" id="myInput"/>
+
+    <input type="button" id="reset" onclick="reset()"/>
+
+    <input type="button" id="test" onclick="test()"/>
 	<!-- <input type="text" id="myInput" style="display:none;"/>-->
 
 	<script>
@@ -20,6 +24,18 @@ let keystrokes = {};
 function flashLED(times) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "/flash-led?times=" + times, true);
+    xhr.send();
+  }
+
+function test() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/test-keyboard", true);
+    xhr.send();
+  }
+
+function reset() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/reset", true);
     xhr.send();
   }
 

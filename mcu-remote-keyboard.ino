@@ -75,10 +75,10 @@ void setup() {
 
   // start webserver (alwasy after the 'on' handlers)
   server.begin();
+
   Serial.println("INIT DONE");
 }
 
 void loop() {
-  digitalWrite(LED_PIN, LOW);
   server.handleClient();
 }

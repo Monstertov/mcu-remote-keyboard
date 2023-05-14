@@ -44,7 +44,7 @@ void setup() {
   pinMode(2, OUTPUT);
   
   // wifi
-  WiFi.softAP(ssid, password, 6, false, 1); // ssid, password, channel, hidden, total connections
+  WiFi.softAP(ssid, password, 6, false, 2); // ssid, password, channel, hidden, total connections
   Serial.print("AP MODE SSID:");
   Serial.println(ssid);
   Serial.print("SERVER IP: ");

@@ -2,6 +2,8 @@
 #include <ESP8266WebServer.h>
 #include <LittleFS.h>
 #include <ESP8266mDNS.h>
+#include <USBHost.h>
+#include <HIDProject.h>
 
 // upload datafolder to ESP with the plugin https://github.com/earlephilhower/arduino-esp8266littlefs-plugin in IDE version 1
 
@@ -37,6 +39,25 @@ void handleRoot() {
   String html = file.readString();
   file.close();
   server.send(200, "text/html", html);
+}
+
+
+// usb HID
+
+USBHost usb;
+HIDBoot<HID_PROTOCOL_KEYBOARD> keyboard(&usb);
+
+
+void testHID(){
+  usb.begin();
+  while (!usb.isReady()) {} // Wait for USB to be ready
+  keyboard.begin();
+  keyboard.press(KEY_LEFT_GUI); // Press the Windows key
+  keyboard.press('r'); // Press the 'r' key
+  keyboard.releaseAll(); // Release all keys
+  delay(1000); // Delay to prevent multiple keystrokes
+  keyboard.print("Hello World"); // Send "Hello World" string
+  delay(1000); // Delay to prevent multiple keystrokes
 }
 
 void setup() {

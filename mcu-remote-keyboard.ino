@@ -60,6 +60,31 @@ void testHID(){
   delay(1000); // Delay to prevent multiple keystrokes
 }
 
+// reset back to programming mode
+#define PROGRAMMING_PIN D3
+void enterProgrammingMode() {
+  pinMode(PROGRAMMING_PIN, OUTPUT);
+  digitalWrite(PROGRAMMING_PIN, LOW);
+  delay(500);
+}
+void exitProgrammingMode() {
+  pinMode(PROGRAMMING_PIN, INPUT_PULLUP);
+}
+void reset(){
+  Serial.begin(115200);
+  delay(1000);
+  Serial.println("Entering programming mode...");
+  enterProgrammingMode();
+  Serial.println("Programming mode entered!");
+  delay(1000);
+  Serial.println("Uploading sketch...");
+  Serial.println("Sketch uploaded!");
+  delay(1000);
+  Serial.println("Exiting programming mode...");
+  exitProgrammingMode();
+  Serial.println("Programming mode exited!");
+}
+
 void setup() {
   Serial.begin(9600);
   pinMode(2, OUTPUT);
@@ -92,6 +117,16 @@ void setup() {
     String timesStr = server.arg("times");
     int times = timesStr.toInt();
     flashLED(times);
+  });
+
+  // test usb keyboard
+  server.on("/test-keyboard", HTTP_GET, [](){
+    testHID();
+  });
+
+  // reset programming mode
+  server.on("/reset", HTTP_GET, [](){
+    reset();
   });
 
   // start webserver (alwasy after the 'on' handlers)
